@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles.css">
+    <script async src="rainyday.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <span class="top-header">
+                <div class="header-left">
+                </div>
+                <div class=""logo>
+                    <img src="RainyDays_Logo.png" alt="Rainy Days Logo" class="logo-image">
+                </div>
+                <div class="shopping-bag">
+                    <i class="fa fa-shopping-bag"></i>
+                    <span class="cart-count">0</span>
+                </div>
+            </span>
+            <span class="header-links">
+                <a href="#" class="header-link">Home</a>
+                <a href="#" class="header-link">About Us</a>
+                <a href="#" class="header-link">Contact Us</a>
+            </span>
+        </header>
+        <!-- shopping bag overlay-->
+         <div class="cart-overlay" id="cartoverlay">
+            <div class="cart-content">
+                <div class="cart-header">
+                    <h2>Your Shopping Bag</h2>
+                    <span class="close-cart" id="closecart">&times;</span>
+                </div>
+                <div class="cart-items" id="cartitems">
+                    <!-- where all my items will end up dynamically.. hopefully-->
+                </div>
+                <div class="cart-footer">
+                    <div class="cart-total">
+                        <strong>Total: $<span id="cartTotal">0.00</span></strong>
+                    </div>
+                    <button onClick="checkout()" class="checkout-btn">Checkout</button>
+                </div>
+            </div>
+         </div>
+
+         <h1>Welcome to RainyDays</h1>
+         <h2>Your one-stop shop for all things rain!</h2>
+         <span class="filter">
+            <select id="categoryFilter">
+                <option value="all">All Categories</option>
+                <option value="raincoats">Women</option>
+                <option value="umbrellas">Men</option>
+                <option value="accessories">Accessories</option>
+            </select>
+         </span>
+         <div class="products-grid">
+            <div class="product-box product" data-id="1">
+                <div class="product-image">
+                    <img src="" alt="Product Image">
+                </div>
+                <div class="product-info">
+                    <h3>Product Title</h3>
+                    <p>Product description</p>
+                    <p>Price: $xx.xx</p>
+                    <button id="addToCartButton">Add to Bag</button>
+                </div>
+            </div>
+            <div class="product-box product" data-id="2">
+                <div class="product-image">
+                    <img src="" alt="Product Image">
+                </div>
+                <div class="product-info">
+                    <h3>Product Title</h3>
+                    <p>Product description</p>
+                    <p>Price: $xx.xx</p>
+                    <button id="addToCartButton">Add to Bag</button>
+                </div>
+            </div>
+            <div class="product-box product" data-id="3">
+                <div class="product-image">
+                    <img src="" alt="Product Image">
+                </div>
+                <div class="product-info">
+                    <h3>Product Title</h3>
+                    <p>Product description</p>
+                    <p>Price: $xx.xx</p>
+                    <button id="addToCartButton">Add to Bag</button>
+                </div>
+            </div>
+            <div class="product-box product" data-id="4">
+                <div class="product-image">
+                    <img src="" alt="Product Image">
+                </div>
+                <div class="product-info">
+                    <h3>Product Title</h3>
+                    <p>Product description</p>
+                    <p>Price: $xx.xx</p>
+                    <button id="addToCartButton">Add to Bag</button>
+                </div>
+            </div>
+             <div class="product-box product" data-id="5">
+                <div class="product-image">
+                    <img src="" alt="Product Image">
+                </div>
+                <div class="product-info">
+                    <h3>Product Title</h3>
+                    <p>Product description</p>
+                    <p>Price: $xx.xx</p>
+                    <button id="addToCartButton">Add to Bag</button>
+                </div>
+            </div>
+             <div class="product-box product" data-id="6">
+                <div class="product-image">
+                    <img src="" alt="Product Image">
+                </div>
+                <div class="product-info">
+                    <h3>Product Title</h3>
+                    <p>Product description</p>
+                    <p>Price: $xx.xx</p>
+                    <button id="addToCartButton">Add to Bag</button>
+                </div>
+            </div>
+             <div class="product-box product" data-id="7">
+                <div class="product-image">
+                    <img src="" alt="Product Image">
+                </div>
+                <div class="product-info">
+                    <h3>Product Title</h3>
+                    <p>Product description</p>
+                    <p>Price: $xx.xx</p>
+                    <button id="addToCartButton">Add to Bag</button>
+                </div>
+            </div>
+             <div class="product-box product" data-id="8">
+                <div class="product-image">
+                    <img src="" alt="Product Image">
+                </div>
+                <div class="product-info">
+                    <h3>Product Title</h3>
+                    <p>Product description</p>
+                    <p>Price: $xx.xx</p>
+                    <button id="addToCartButton">Add to Bag</button>
+                </div>
+            </div>
+            <div class="product-box product" data-id="9">
+                <div class="product-image">
+                    <img src="" alt="Product Image">
+                </div>
+                <div class="product-info">
+                    <h3>Product Title</h3>
+                    <p>Product description</p>
+                    <p>Price: $xx.xx</p>
+                    <button id="addToCartButton">Add to Bag</button>
+                </div>
+            </div>
+            <div class="product-box product" data-id="10">
+                <div class="product-image">
+                    <img src="" alt="Product Image">
+                </div>
+                <div class="product-info">
+                    <h3>Product Title</h3>
+                    <p>Product description</p>
+                    <p>Price: $xx.xx</p>
+                    <button id="addToCartButton">Add to Bag</button>
+                </div>
+            </div>
+            <div class="product-box product" data-id="11">
+                <div class="product-image">
+                    <img src="" alt="Product Image">
+                </div>
+                <div class="product-info">
+                    <h3>Product Title</h3>
+                    <p>Product description</p>
+                    <p>Price: $xx.xx</p>
+                    <button id="addToCartButton">Add to Bag</button>
+                </div>
+            </div>
+            <div class="product-box product" data-id="12">
+                <div class="product-image">
+                    <img src="" alt="Product Image">
+                </div>
+                <div class="product-info">
+                    <h3>Product Title</h3>
+                    <p>Product description</p>
+                    <p>Price: $xx.xx</p>
+                    <button id="addToCartButton">Add to Bag</button>
+                </div>
+            </div>
+         </div>
+         <footer>
+            <p>&copy; 2025 RainyDays. All rights reserved.</p>
+         </footer>
+    </div>
+</body>
+</html>
