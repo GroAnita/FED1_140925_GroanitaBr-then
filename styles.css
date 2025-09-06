@@ -9,7 +9,7 @@
 
 /*produkt grid layout*/
 
-.products.grid {
+.products-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap : 20px;
@@ -29,6 +29,7 @@
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     background: #ffffff;
     cursor: pointer;
+    width: 400px;
 }
 
 .product-box:hover {
@@ -132,8 +133,8 @@
 
 .cart-count {
     position: absolute;
-    top: -8px;
-    right: -15px;
+    top: -20px;
+    right: -4px;
     background-color: #dc3540;
     color: #ffffff;
     border-radius: 50%;
