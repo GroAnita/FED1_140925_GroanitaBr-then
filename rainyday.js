@@ -53,6 +53,17 @@ async function getProducts() {
             productBox.appendChild(productImage);
             productBox.appendChild(productInfo);
             container.appendChild(productBox);
+
+            const addToCartButton = document.createElement('button');
+            addToCartButton.textContent = 'Add to Bag';
+            addToCartButton.className = 'add-to-cart-btn';
+            productBox.appendChild(addToCartButton);
+
+            addToCartButton.addEventListener('click', function() {
+                cart.push(product);
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateShoppingBag();
+            });
         });
     } catch (error) {
         console.error("Error fetching products:", error);
@@ -61,3 +72,19 @@ async function getProducts() {
 
 getProducts();
 
+function updateShoppingBag() {
+    const cartItemsContainer = document.getElementById('cartitems');
+    cartItemsContainer.innerHTML = '';
+
+    cart.forEach(item => {
+        const cartItem = document.createElement('div');
+        cartItem.className = 'cart-item';
+        cartItem.textContent = `${item.title} - $${item.price}`;
+        cartItemsContainer.appendChild(cartItem);
+    });
+    document.querySelector('.cart-count').textContent = cart.length;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    updateShoppingBag();
+});
