@@ -88,3 +88,16 @@ function updateShoppingBag() {
 document.addEventListener('DOMContentLoaded', function() {
     updateShoppingBag();
 });
+
+function openShoppingBag() {
+    const shoppingBag = document.getElementById('cartoverlay');
+    shoppingBag.style.display = 'flex';
+}
+
+function closeShoppingBag() {
+    const shoppingBag = document.getElementById('cartoverlay');
+    shoppingBag.style.display = 'none';
+}
+
+document.querySelector('.shopping-bag').addEventListener('click', openShoppingBag);
+document.getElementById('closecart').addEventListener('click', closeShoppingBag);
