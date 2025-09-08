@@ -28,6 +28,7 @@
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     background: white;
     cursor: pointer;
+    
 }
 
 .product_box:hover {
@@ -756,11 +757,12 @@ body.show-cart .container{
     padding: 8px 16px;
     border: none;
     border-radius: 4px;
-    background-color: #007bff;
+    background-color: #003f83;
     color: white;
     cursor: pointer;
     transition: background-color 0.3s;
     margin-top: 24px;
+    font-weight: 700;
 }
 
 .returnCart button:hover {
@@ -771,11 +773,12 @@ body.show-cart .container{
     padding: 12px 24px;
     border: none;
     border-radius: 4px;
-    background-color: #28a745;
+    background-color: #00791c;
     color: #ffffff;
     cursor: pointer;
     transition: background-color 0.3s;
     margin-top: 24px;
+    font-weight: 700;
 }
 
 .checkout-item {
