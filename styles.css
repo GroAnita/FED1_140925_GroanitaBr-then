@@ -88,11 +88,12 @@
 }
 
 .product_info button {
-    background-color: #28a745;
+    background-color: #186429;
     color: white;
     border: none;
     padding: 8px 12px;
     cursor: pointer;
+    font-weight: 700;
 }
 
 .product_info button:hover {
@@ -591,7 +592,7 @@ body.show-cart .container{
 .product-price #productPrice {
     font-size: 1.5rem;
     font-weight: bold;
-    color: #28a745;
+    color: #18672a;
 }
 
 .original-price {
@@ -650,8 +651,9 @@ body.show-cart .container{
 }
 
 .add-to-cart-btn {
-    background-color: #28a745;
+    background-color: #186429;
     color: white;
+    font-weight: 700;
 }
 
 .add-to-cart-btn:hover {
@@ -659,8 +661,9 @@ body.show-cart .container{
 }
 
 .buy-now-btn {
-    background-color: #007bff;
+    background-color: #003267;
     color: white;
+    font-weight: 700;
 }
 
 .buy-now-btn:hover {
