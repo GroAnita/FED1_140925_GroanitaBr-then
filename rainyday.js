@@ -16,9 +16,7 @@ async function fetchProducts() {
         
         const produkter = data.data || data;
 
-    products = produkter; // lagre produkter globalt så jeg kan bruke det i andre functions
-    alert('Fetched products: ' + JSON.stringify(products));
-    console.log('Fetched products:', products);
+        products = produkter; // lagre produkter globalt så jeg kan bruke det i andre functions
         console.log('Fetched products:', products);
 
         if (produkter && produkter.length > 0) {
