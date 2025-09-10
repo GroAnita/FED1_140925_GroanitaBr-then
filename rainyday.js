@@ -27,7 +27,7 @@ async function fetchProducts() {
                     displaySingleProduct(product);
                 } 
             }
-            // viser inntil 12 produkter (1 for hver produkt boks)
+            // viser inntil 12 produkter (1 for hver produkt boks)for å kjøre en ny commit
             else if(isHomePage) {
                 for (let i = 0; i < Math.min(12, produkter.length); i++) {
                     displayProduct(produkter[i], i);
