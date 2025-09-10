@@ -579,10 +579,12 @@ body.show-cart .container{
     align-items: center;
     gap: 10px;
     margin-bottom: 15px;
+    justify-content: center;
 }
 
 .product-rating span {
     color: #ffc107;
+    font-size: 1.2rem;
 }
 
 .product-price {

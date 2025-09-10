@@ -2,12 +2,8 @@ const API_URL = "https://v2.api.noroff.dev/rainy-days";
 
 let products = [];
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
-const isProductPage = window.location.pathname.includes('productpage.html') || 
-                     window.location.href.includes('productpage.html');
-const isHomePage = window.location.pathname.includes('index.html') || 
-                  window.location.href.includes('index.html') || 
-                  window.location.pathname === '/' || 
-                  window.location.pathname.endsWith('/');
+const isProductPage = window.location.pathname.includes('productpage.html') 
+const isHomePage = window.location.pathname === '/' || window.location.pathname.includes('index.html');
 
 async function fetchProducts() {
     if (!API_URL) {
@@ -17,9 +13,11 @@ async function fetchProducts() {
     try {
         const respons = await fetch(API_URL);
         const data = await respons.json();
-        console.log(data);
+        
         const produkter = data.data || data;
-        products = produkter; // lagre produkter globalt
+
+        products = produkter; // lagre produkter globalt så jeg kan bruke det i andre functions
+
         if (produkter && produkter.length > 0) {
             if(isProductPage) {
                 const productId = getProductId() || produkter[0].id;
@@ -37,7 +35,7 @@ async function fetchProducts() {
         }
     }
     catch (error) {
-        console.error("klarer ikke hente produkter:", error);
+        console.error("klarer ikke hente produkter:", error); // thinking of keeping this console.error... not sure yet
     }
 }
 
@@ -141,7 +139,6 @@ function displayProduct(product, index) {
 function addToCart(productId) {
     const product = products.find(p => p.id === productId);
     if (!product) {
-        console.error("Product not found");
         return;
     }
     
@@ -166,8 +163,6 @@ function addToCart(productId) {
     // oppdatering cart teller
     updateCartCounter();
     
-    console.log("Product added to cart:", product.title);
-    console.log("Cart:", cart);
 }
 
 function updateCartCounter() {
@@ -346,6 +341,7 @@ function filterProducts(category) {
                            
                     //had to find a different way to write this code because 
                     //it also came back with the women clothes when i did as above
+                    //it is called regular expressions and the \b means word boundary so it only matches whole words
                 case "men":
                      return productGender === "male" || 
                         /\bmen\b/i.test(productTitle) || 
@@ -560,7 +556,7 @@ function placeOrder(event) {
     showPurchaseSuccess();
 }
 
-// Legacy function for backward compatibility
+
 function showAlert(message) {
     showCustomAlert(message);
 }
@@ -583,7 +579,7 @@ function initializeCustomAlert() {
         okBtn.onclick = closeCustomAlert;
     }
     
-    // Closing when clicking outside the modal
+    // Closing when I am clicking outside the modal
     if (alertModal) {
         alertModal.onclick = function(event) {
             if (event.target === alertModal) {
@@ -592,7 +588,7 @@ function initializeCustomAlert() {
         }
     }
     
-    // Initialize Purchase Success Modal (only on checkout page)
+    // Initialize Purchase Success Modal (only on my checkout page)
     if (isCheckoutPage) {
         const successModal = document.getElementById('purchaseSuccessModal');
         const successCloseBtn = document.querySelector('.success-close');
@@ -605,12 +601,12 @@ function initializeCustomAlert() {
         if (successOkBtn) {
             successOkBtn.onclick = function() {
                 closePurchaseSuccess();
-                // Redirect to home page for continued shopping
+                // Redirect to home page for continuing shopping
                 window.location.href = 'index.html';
             };
         }
         
-        // Close when clicking outside the success modal
+        // Closing when I am clicking outside the success modal
         if (successModal) {
             successModal.onclick = function(event) {
                 if (event.target === successModal) {
@@ -626,10 +622,10 @@ function displayCheckoutItems() {
     const cartItemsContainer = document.querySelector('.cart_items');
     const totalAmountElement = document.getElementById('totalAmount');
     
-    // Check if we're on the checkout page
+    // Check if I am on the checkout page , it know this because these elements are only found on checkoutpage
     if (!cartItemsContainer || !totalAmountElement) return;
     
-    // If cart is empty
+    // If my cart is empty
     if (cart.length === 0) {
         cartItemsContainer.innerHTML = '<div class="empty-cart">Your cart is empty</div>';
         totalAmountElement.textContent = '0.00';
@@ -660,6 +656,6 @@ function displayCheckoutItems() {
         cartItemsContainer.innerHTML += cartItemHTML;
     });
     
-    // Update total amount
+    // Updating my total amount
     totalAmountElement.textContent = total.toFixed(2);
 }
