@@ -59,7 +59,7 @@
         </select>
     </span>
     
-    <div class="products-grid">
+    <div class="products-grid" id="product-container">
         <div class="product_box product" data-id="1">
             <div class="product_img">
                 <img src="" alt="Product Image" />
@@ -68,7 +68,11 @@
                 <h3>Product Title</h3>
                 <p>Product description goes here.</p>
                 <p>Price: $XX.XX</p>
+                <span class="filter">
+
+                </span>
                 <button id="addToCartButton">Add to Cart</button>
+            
             </div>
         </div>
         <div class="product_box product" data-id="2">
@@ -198,12 +202,17 @@
         <button id="prevPage">Previous</button>
         <button id="nextPage">Next</button>
     </div>
+    <div id="customAlert">
+  <h3 id="alertTitle"></h3>
+  <p id="alertMessage"></p>
+  <button id="alertOkBtn">OK</button>
+  </div>
     <footer>
         <div class="logofooter">
             <img src="images/RainyDays_Logo.png" alt="RainyDays Logo" />
         </div>
         <p>&copy; 2025 RainyDays. All rights reserved.</p>
     </footer>
-</div>
+
 </body>
 </html>

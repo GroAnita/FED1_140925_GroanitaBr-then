@@ -17,6 +17,7 @@ async function fetchProducts() {
         const produkter = data.data || data;
 
         products = produkter; // lagre produkter globalt så jeg kan bruke det i andre functions
+        console.log('Fetched products:', products);
 
         if (produkter && produkter.length > 0) {
             if(isProductPage) {
@@ -89,6 +90,7 @@ function displaySingleProduct(product){
     if (addToCartBtn) {
         addToCartBtn.onclick = () => addToCart(product.id);
     }
+
     const buyNowBtn = document.getElementById('buyNowBtn');
     if (buyNowBtn) {
         buyNowBtn.onclick = () => buyNow();
@@ -99,44 +101,79 @@ function displaySingleProduct(product){
 
 
 function displayProduct(product, index) {
-    // Finne den spesifikke produkt boksen  
+    // Find the product box for this index
     const productBoxes = document.querySelectorAll('.product_box');
     const currentBox = productBoxes[index];
-
-    if(currentBox) {
-        currentBox.style.cursor = 'pointer';
-        currentBox.addEventListener('click', () => {
-            window.location.href = `productpage.html?id=${product.id}`;
-        });
-    }
-    
-    if (!currentBox) return; // ingen boks funnet for denne indeksen
-    
-    //  product ID på box
+    if (!currentBox) return;
+    currentBox.innerHTML = "";
     currentBox.dataset.productId = product.id;
-    
-    // Finne elementer innenfor denne spesifikke produkt boksen
-    const titleElement = currentBox.querySelector('.product_info h3');
-    const descriptionElement = currentBox.querySelector('.product_info p:first-of-type');
-    const priceElement = currentBox.querySelector('.product_info p:last-of-type');
-    const imageElement = currentBox.querySelector('.product_img img');
-    const buttonElement = currentBox.querySelector('button');
+        console.log('Rendering product:', product);
 
-    if (titleElement) titleElement.textContent = product.title;
-    if (descriptionElement) descriptionElement.textContent = product.description;
-    if (priceElement) priceElement.textContent = `Price: $${product.price}`;
-    if (imageElement && product.image) {
-        imageElement.src = product.image.url;
-        imageElement.alt = product.image.alt || product.title;
-    }
+    // Create image section
+    const imgDiv = document.createElement('div');
+    imgDiv.className = 'product_img';
+    const img = document.createElement('img');
+    img.src = product.image ? product.image.url : '';
+    img.alt = product.image ? (product.image.alt || product.title) : product.title;
+    imgDiv.appendChild(img);
+    currentBox.appendChild(imgDiv);
 
-    // klikk hendelse til knappen
-    if (buttonElement) {
-        buttonElement.onclick = () => addToCart(product.id);
-    }
+    // Create info section
+    const infoDiv = document.createElement('div');
+    infoDiv.className = 'product_info';
+    const title = document.createElement('h3');
+    title.textContent = product.title;
+    infoDiv.appendChild(title);
+    const desc = document.createElement('p');
+    desc.textContent = product.description;
+    infoDiv.appendChild(desc);
+    const price = document.createElement('p');
+    price.textContent = `Price: $${product.price}`;
+    infoDiv.appendChild(price);
+
+    // Size dropdown
+    const sizeDropdown = document.createElement('select');
+    sizeDropdown.className = 'size-dropdown';
+    const sizes = product.sizes && product.sizes.length > 0 ? product.sizes : ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+    const defaultOption = document.createElement('option');
+    defaultOption.value = '';
+    defaultOption.textContent = 'Select Size';
+    sizeDropdown.appendChild(defaultOption);
+    sizes.forEach(size => {
+        const option = document.createElement('option');
+        option.value = size;
+        option.textContent = size;
+        sizeDropdown.appendChild(option);
+    });
+    infoDiv.appendChild(sizeDropdown);
+
+    // View Details button
+    const viewDetailsBtn = document.createElement('button');
+    viewDetailsBtn.id = 'viewDetailsButton';
+    viewDetailsBtn.textContent = 'View Details';
+    viewDetailsBtn.onclick = () => {
+        window.location.href = `productpage.html?id=${product.id}`;
+    };
+    infoDiv.appendChild(viewDetailsBtn);
+
+    // Add to Cart button
+    const addToCartBtnElement = document.createElement('button');
+    addToCartBtnElement.id = 'addToCartButton';
+    addToCartBtnElement.textContent = 'Add to Cart';
+    addToCartBtnElement.onclick = () => {
+        const selectedSize = sizeDropdown.value;
+        if (!selectedSize) {
+            showCustomAlert('Please select a size before adding to cart.', 'Size Required');
+            return;
+        }
+        addToCart(product.id, selectedSize);
+    };
+    infoDiv.appendChild(addToCartBtnElement);
+
+    currentBox.appendChild(infoDiv);
 }
 
-function addToCart(productId) {
+function addToCart(productId, size) {
     const product = products.find(p => p.id === productId);
     if (!product) {
         return;
@@ -153,7 +190,9 @@ function addToCart(productId) {
             title: product.title,
             price: product.price,
             image: product.image.url,
-            quantity: 1
+            size: size, 
+            quantity: 1,
+            
         });
     }
     
@@ -200,6 +239,7 @@ function displayCartItems() {
                 <img src="${item.image}" alt="${item.title}" class="cart-item-image">
                 <div class="cart-item-details">
                     <div class="cart-item-title">${item.title}</div>
+                    <div class="cart-item-size">Size: ${item.size}</div>
                     <div class="cart-item-price">$${item.price}</div>
                 </div>
                 <div class="cart-item-quantity">
@@ -226,6 +266,9 @@ function changeQuantity(itemAmount, change) {
         localStorage.setItem('cart', JSON.stringify(cart));
         updateCartCounter();
         displayCartItems();
+        if (window.location.pathname.includes('checkout.html')) {
+            displayCheckoutItems();
+        }
     }
 }
 
@@ -305,19 +348,34 @@ function initializeProductTabs() {
     });
 }
 
+
 function initializeFilter() {
     const filterSelect = document.getElementById('categoryFilter');
     if (!filterSelect) return;
-    
     filterSelect.addEventListener('change', (e) => {
         const selectedCategory = e.target.value;
         if (selectedCategory === '') {
-            // Show all products - reload the page
-            location.reload();
+            displayFilteredProducts(products);
         } else {
             filterProducts(selectedCategory);
         }
     });
+}
+
+
+function displayFilteredProducts(filteredProducts) {
+    const productContainer = document.getElementById('product-container');
+    if (productContainer) {
+        productContainer.innerHTML = "";
+        const maxProducts = Math.min(12, filteredProducts.length);
+        for (let i = 0; i < maxProducts; i++) {
+            const productBox = document.createElement('div');
+            productBox.className = 'product_box';
+            productContainer.appendChild(productBox);
+            displayProduct(filteredProducts[i], i);
+        }
+    }
+    console.log('Filtered Products:', filteredProducts);
 }
 
 function filterProducts(category) {
@@ -330,6 +388,7 @@ function filterProducts(category) {
             const productGender = product.gender ? product.gender.toLowerCase() : '';
             const productTitle = product.title ? product.title.toLowerCase() : '';
             const productTags = product.tags ? product.tags.join(', ').toLowerCase() : '';
+            
 
             switch (category) {
                 case "women":
@@ -339,9 +398,7 @@ function filterProducts(category) {
                            productTags.includes('women') ||
                            productTags.includes('female');
                            
-                    //had to find a different way to write this code because 
-                    //it also came back with the women clothes when i did as above
-                    //it is called regular expressions and the \b means word boundary so it only matches whole words
+                   
                 case "men":
                      return productGender === "male" || 
                         /\bmen\b/i.test(productTitle) || 
@@ -361,26 +418,9 @@ function filterProducts(category) {
     }
     
     // vise filtrerte produkter
+        console.log('Filter category:', category);
+        console.log('Filtered products:', filteredProducts);
     displayFilteredProducts(filteredProducts);
-}
-
-function displayFilteredProducts(filteredProducts) {
-    const productBoxes = document.querySelectorAll('.product_box');
-    
-    // Hide all product boxes first
-    productBoxes.forEach(box => {
-        box.style.display = 'none';
-    });
-
-    // viser inntill 12 filtrerte produkter
-    const maxProducts = Math.min(12, filteredProducts.length);
-
-    for (let i = 0; i < maxProducts; i++) {
-        if (productBoxes[i]) {
-            displayProduct(filteredProducts[i], i);
-            productBoxes[i].style.display = 'block';
-        }
-    }
 }
 
 function checkout(){
@@ -551,7 +591,8 @@ function placeOrder(event) {
     cart = [];
     localStorage.setItem('cart', JSON.stringify(cart));
     updateCartCounter();
-    
+    //empty checkoutpage for times when cart is cleared
+    displayCheckoutItems();
     // Show purchase success modal
     showPurchaseSuccess();
 }
