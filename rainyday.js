@@ -101,7 +101,7 @@ function displaySingleProduct(product){
 
 
 function displayProduct(product, index) {
-    // Find the product box for this index
+    // Finding the product box for this index
     const productBoxes = document.querySelectorAll('.product_box');
     const currentBox = productBoxes[index];
     if (!currentBox) return;
@@ -109,7 +109,7 @@ function displayProduct(product, index) {
     currentBox.dataset.productId = product.id;
         console.log('Rendering product:', product);
 
-    // Create image section
+    // Create the image section
     const imgDiv = document.createElement('div');
     imgDiv.className = 'product_img';
     const img = document.createElement('img');
@@ -118,7 +118,7 @@ function displayProduct(product, index) {
     imgDiv.appendChild(img);
     currentBox.appendChild(imgDiv);
 
-    // Create info section
+    // Create my info section
     const infoDiv = document.createElement('div');
     infoDiv.className = 'product_info';
     const title = document.createElement('h3');
@@ -131,7 +131,7 @@ function displayProduct(product, index) {
     price.textContent = `Price: $${product.price}`;
     infoDiv.appendChild(price);
 
-    // Size dropdown
+    // Size dropdown meny
     const sizeDropdown = document.createElement('select');
     sizeDropdown.className = 'size-dropdown';
     const sizes = product.sizes && product.sizes.length > 0 ? product.sizes : ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
@@ -489,29 +489,6 @@ function loadCheckoutCart() {
     calculateCheckoutTotal();
 }
 
-function displayCheckoutItems() {
-    const cartItemsContainer = document.querySelector('.cart-items');
-    if (!cartItemsContainer) return;
-
-    cartItemsContainer.innerHTML = '';
-
-    cart.forEach((item, index) => {
-
-        const itemHTML = `
-            <div class="checkout-item">
-                <img src="${item.image}" alt="${item.title}">
-                <div class="item-details">
-                    <h3>${item.title}</h3>
-                    <p>Size: ${item.size}</p>
-                    <p>Quantity: ${item.quantity}</p>
-                    <p>Price: $${item.price.toFixed(2)}</p>
-                </div>
-            </div>
-        `;
-        cartItemsContainer.innerHTML += itemHTML;
-    
-    });
-}
 
 // Call this when the page loads
 document.addEventListener('DOMContentLoaded', function() {
