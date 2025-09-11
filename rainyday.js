@@ -471,10 +471,9 @@ fetchProducts().then(() => {
             }
         });
     }
-    
+
     // Initialize custom alert modal
     initializeCustomAlert();
-    
 });
 
 // Checkout
