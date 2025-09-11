@@ -1,7 +1,8 @@
 const API_URL = "https://v2.api.noroff.dev/rainy-days";
 let products = [];
-const isProductPage = window.location.pathname.includes('productpage.html');
 const isHomePage = window.location.pathname.includes('index.html');
+const isProductPage = window.location.pathname.includes('productpage.html');
+
 
 async function fetchProducts() {
     if (!API_URL) {
