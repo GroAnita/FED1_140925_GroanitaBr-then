@@ -3,7 +3,7 @@ const API_URL = "https://v2.api.noroff.dev/rainy-days";
 let products = [];
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 const isProductPage = window.location.pathname.includes('productpage.html') 
-const isHomePage = window.location.pathname.includes('index.html');
+const isHomePage = window.location.pathname === '/' || window.location.pathname.includes('index.html');
 const isCheckoutPage = window.location.pathname.includes('checkout.html');
 
 async function fetchProducts() {
