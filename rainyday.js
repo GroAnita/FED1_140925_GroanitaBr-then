@@ -4,6 +4,7 @@ let products = [];
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 const isProductPage = window.location.pathname.includes('productpage.html') 
 const isHomePage = window.location.pathname === '/' || window.location.pathname.includes('index.html');
+const isCheckoutPage = window.location.pathname.includes('checkout.html');
 
 async function fetchProducts() {
     if (!API_URL) {
@@ -478,7 +479,7 @@ fetchProducts().then(() => {
 
 // Checkout
 
-const isCheckoutPage = window.location.pathname.includes('checkout.html');
+
 
 function loadCheckoutCart() {
     const savedCart = localStorage.getItem('cart');
